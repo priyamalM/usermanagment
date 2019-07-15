@@ -26,3 +26,11 @@ server:
 logging:
   level:
     org.org.springframework: INFO
+
+#server:
+#  port: 8082
+#  servlet:
+#    context-path: /ui
+#  session:
+#      cookie:
+#        name: UISESSION
