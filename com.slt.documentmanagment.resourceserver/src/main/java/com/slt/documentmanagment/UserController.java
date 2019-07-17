@@ -1,6 +1,5 @@
 package com.slt.documentmanagment;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Controller;
@@ -8,12 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.Map;
 
 @Controller
 public class UserController {
 
-    @PreAuthorize("#oauth2.hasScope('read')")
+//    @PreAuthorize("#oauth2.hasScope('read')")
+    @RolesAllowed("ROLE_admin")
     @RequestMapping(method = RequestMethod.GET, value = "/users/extra")
     @ResponseBody
     public Map<String, Object> getExtraInfo(Authentication auth) {

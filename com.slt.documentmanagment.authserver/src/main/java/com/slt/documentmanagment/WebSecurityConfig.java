@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
@@ -18,23 +19,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    CustomUserDetailsService customUserDetailsService;
-
+    UserDetailsService userDetailsService;
 
     @Autowired
     public void globalUserDetails(final AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder);
-        auth.inMemoryAuthentication()
-                .withUser("john").password(passwordEncoder.encode("123")).roles("USER").and()
-                .withUser("tom").password(passwordEncoder.encode("111")).roles("ADMIN").and()
-                .withUser("user1").password(passwordEncoder.encode("pass")).roles("USER").and()
-                .withUser("admin").password(passwordEncoder.encode("nimda")).roles("ADMIN");
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//
-//    }
 
     @Override
     @Bean
