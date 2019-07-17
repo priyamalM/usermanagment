@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import javax.sql.DataSource;
 import java.util.Arrays;
 
 @Configuration
@@ -28,6 +29,8 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
+    @Autowired
+    DataSource dataSource;
 
     @Override
     public void configure(final AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
@@ -36,38 +39,8 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
 
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception { // @formatter:off
-        clients.inMemory()
-                .withClient("sampleClientId")
-                .secret(passwordEncoder().encode("secret"))
-                .authorizedGrantTypes("implicit","password")
-                .scopes("read", "write", "foo", "bar")
-                .autoApprove(true)
-                .accessTokenValiditySeconds(20)
-                .redirectUris("http://localhost:8083/","http://localhost:8086/")
-                .and()
-                .withClient("fooClientIdPassword")
-                .secret(passwordEncoder().encode("secret"))
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "client_credentials")
-                .scopes("foo", "read", "write")
-                .accessTokenValiditySeconds(3600)       // 1 hour
-                .refreshTokenValiditySeconds(2592000)  // 30 days
-                .redirectUris("http://www.example.com","http://localhost:8089/","http://localhost:8080/login/oauth2/code/custom","http://localhost:8080/ui-thymeleaf/login/oauth2/code/custom", "http://localhost:8080/authorize/oauth2/code/bael", "http://localhost:8080/login/oauth2/code/bael","http://localhost:8080/ui-thymeleaf/")
-                .and()
-                .withClient("barClientIdPassword")
-                .secret(passwordEncoder().encode("secret"))
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token","client_credentials")
-                .scopes("bar", "read", "write")
-                .autoApprove(true)
-                .accessTokenValiditySeconds(3600)       // 1 hour
-                .refreshTokenValiditySeconds(2592000)  // 30 days
-                .redirectUris("http://www.example.com","http://localhost:8089/","http://localhost:8087/login/oauth2/code/custom","http://localhost:8087/ui-thymeleaf/login/oauth2/code/custom", "http://localhost:8087/authorize/oauth2/code/bael", "http://localhost:8087/login/oauth2/code/bael","http://localhost:8087/ui-thymeleaf/")
-                .and()
-                .withClient("testImplicitClientId")
-                .authorizedGrantTypes("implicit")
-                .scopes("read", "write", "foo", "bar")
-                .autoApprove(true)
-                .redirectUris("http://www.example.com");
-    } // @formatter:on
+       clients.jdbc(dataSource).passwordEncoder(passwordEncoder());
+    }
 
     @Bean
     @Primary
