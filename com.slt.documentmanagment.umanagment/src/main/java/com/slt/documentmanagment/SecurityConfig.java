@@ -1,7 +1,9 @@
 package com.slt.documentmanagment;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -33,6 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public RestTemplate restTemplate(OAuth2AuthorizedClientService clientService) {
         RestTemplate restTemplate = new RestTemplate();
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        converter.setObjectMapper(new ObjectMapper());
+        restTemplate.getMessageConverters().add(converter);
         List<ClientHttpRequestInterceptor> interceptors = restTemplate.getInterceptors();
         if (CollectionUtils.isEmpty(interceptors)) {
             interceptors = new ArrayList<>();

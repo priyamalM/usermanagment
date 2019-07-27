@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class CreateUserController {
 
     @RequestMapping(method = RequestMethod.POST,value = "/create/user")
-    public String createUser(@ModelAttribute("userob")UserDto userDto, Model model){
+    public String createUser(@ModelAttribute("userob") UserDto userDto, Model model){
         return "search";
     }
 

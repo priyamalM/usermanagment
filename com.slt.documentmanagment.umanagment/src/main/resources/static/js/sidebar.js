@@ -31,11 +31,23 @@ $("#show-sidebar").click(function() {
 
 });
 
-$(document).ready( function () {
-    $('#userlisttable').DataTable(
-    {
-    lengthChange: false,
-    searching: false,
-    ordering:  false
-    });
-} );
+//$(document).ready( function () {
+//    $('#userlisttable').DataTable(
+//            ajax: {
+//                       url: 'http://localhost:8082/spring-security-oauth-resource/users',
+//                       method: "GET",
+//                       xhrFields: {
+//                           withCredentials: true
+//                       }
+//                    },
+//                    columns: [
+//                        { data: 0 }
+//                        /*and so on, keep adding data elements here for all your columns.*/
+//                    ]
+//                }
+//    {
+//    lengthChange: false,
+//    searching: false,
+//    ordering:  false
+//    });
+//} );

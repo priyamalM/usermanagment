@@ -5,17 +5,26 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @EqualsAndHashCode
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+@AllArgsConstructor
+public class UserDto implements Serializable {
 
+    private Integer id;
+    private String idcol;
     private String userName;
+    private String password;
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
+    private boolean enabled;
+    private boolean accountNonExpired;
+    private boolean credentialsNonExpired;
+    private boolean accountNonLocked;
     private String []roles;
+
 
 }

@@ -42,17 +42,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>pri</td>
-                    <td>madushanka.priyamal@yahoo.com</td>
-                    <td><button type="button" class="btn btn-secondary btn-sm pb-0 pt-0 mt-0 mb-0"><i class="fas fa-eye"></i> view </button>
-                        <button type="button" class="btn btn-secondary btn-sm pb-0 pt-0 mt-0 mb-0"><i class="fas fa-edit"></i> edit </button></td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>pri</td>
-                    <td>madushanka.priyamal@yahoo.com</td>
+                <tr th:each="user, iStat : ${paginatedUser}">
+                    <td scope="row">1</td>
+                    <td th:text="${user.userName}" />
+                    <td th:text="${user.email}" />
                     <td><button type="button" class="btn btn-secondary btn-sm pb-0 pt-0 mt-0 mb-0"><i class="fas fa-eye"></i> view </button>
                         <button type="button" class="btn btn-secondary btn-sm pb-0 pt-0 mt-0 mb-0"><i class="fas fa-edit"></i> edit </button></td>
                 </tr>
@@ -127,6 +120,6 @@
 
 <!-- page-wrapper -->
 <div th:replace="fragments/footer :: footer" th:remove="tag"></div>
-
+<script src="js/sidebar.js"  th:src="@{/js/sidebar.js}"></script>
 </body>
 </html>

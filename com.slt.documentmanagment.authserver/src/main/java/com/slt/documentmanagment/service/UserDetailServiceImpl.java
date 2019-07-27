@@ -1,8 +1,8 @@
 package com.slt.documentmanagment.service;
 
-import com.slt.documentmanagment.model.AuthUserDetail;
+import com.slt.documentmanagment.AuthUserDetail;
+import com.slt.documentmanagment.UserDetailRepository;
 import com.slt.documentmanagment.model.User;
-import com.slt.documentmanagment.repository.UserDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetails;

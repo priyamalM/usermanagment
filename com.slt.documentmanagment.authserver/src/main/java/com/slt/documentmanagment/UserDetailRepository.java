@@ -1,4 +1,4 @@
-package com.slt.documentmanagment.repository;
+package com.slt.documentmanagment;
 
 import com.slt.documentmanagment.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

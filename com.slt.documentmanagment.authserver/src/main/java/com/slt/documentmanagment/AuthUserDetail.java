@@ -1,5 +1,6 @@
-package com.slt.documentmanagment.model;
+package com.slt.documentmanagment;
 
+import com.slt.documentmanagment.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

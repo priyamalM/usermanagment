@@ -10,8 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.sql.DataSource;
-
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -29,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
+        System.out.println("encoded pass -" + passwordEncoder.encode("secret"));
         return super.authenticationManagerBean();
     }
 

@@ -37,6 +37,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
+
+        <!--   project dependencies     -->
+        <dependency>
+            <groupId>com.slt.documentmanagment</groupId>
+            <artifactId>com.slt.documentmanagment.umanagmentcore</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>
