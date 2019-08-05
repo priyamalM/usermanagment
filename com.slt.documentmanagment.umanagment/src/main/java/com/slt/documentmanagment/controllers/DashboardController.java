@@ -3,6 +3,8 @@ package com.slt.documentmanagment.controllers;
 import com.slt.documentmanagment.PageableUserDto;
 import com.slt.documentmanagment.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,10 +28,17 @@ public class DashboardController {
             , Model model
             ,@RequestParam("page") Optional<Integer> page
             ,@RequestParam("size") Optional<Integer> size){
-        ResponseEntity<PageableUserDto> getEntity = restTemplate.exchange("http://localhost:8082/spring-security-oauth-resource/users", HttpMethod.GET,null, PageableUserDto.class);
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(1);
+        ResponseEntity<PageableUserDto> getEntity = restTemplate.exchange("http://localhost:8082/spring-security-oauth-resource/users?page="+currentPage+"&size="+pageSize
+                , HttpMethod.GET
+                , null
+                , PageableUserDto.class);
         PageableUserDto body = getEntity.getBody();
-        model.addAttribute("paginatedUser",body.getUserDtoList());
-        model.addAttribute("pageNumbers", body.getTotalPageSize());
+        PageImpl<UserDto> userDtos = new PageImpl<>(body.getUserDtoList(), PageRequest.of(currentPage,pageSize), body.getTotalPages().size());
+        model.addAttribute("paginatedUser",userDtos);
+        model.addAttribute("pageNumbers", body.getTotalPages());
+        model.addAttribute("pageSize",body.getTotalPages().size());
         return "search";
     }
 

@@ -1,17 +1,17 @@
 package com.slt.documentmanagment;
 
 import com.slt.documentmanagment.model.User;
+import com.slt.documentmanagment.repository.UserDetailRepository;
+import com.slt.documentmanagment.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import java.util.List;
@@ -26,8 +26,11 @@ public class UserController {
     @Autowired
     UserDetailRepository userDetailRepository;
 
-//    @PreAuthorize("#oauth2.hasScope('read')")
-    @RolesAllowed("ROLE_admin")
+    @Autowired
+    UserService userService;
+
+    @PreAuthorize("#oauth2.hasScope('read')")
+//    @RolesAllowed("ROLE_admin")
     @RequestMapping(method = RequestMethod.GET, value = "/users/extra")
     @ResponseBody
     public Map<String, Object> getExtraInfo(Authentication auth) {
@@ -54,7 +57,7 @@ public class UserController {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                     .boxed()
                     .collect(Collectors.toList());
-            pageableUserDto.setTotalPageSize(pageNumbers);
+            pageableUserDto.setTotalPages(pageNumbers);
         }
 
         List<UserDto> userDtoList = paginatedUser.stream().map(user -> {
@@ -70,6 +73,13 @@ public class UserController {
         }).collect(Collectors.toList());
         pageableUserDto.setUserDtoList(userDtoList);
         return pageableUserDto;
+    }
+
+    @PostMapping("/user")
+    @ResponseBody
+    @RolesAllowed("ROLE_admin")
+    public UserDto saveUser(@RequestBody UserDto userDto){
+        return userService.saveUser(userDto);
     }
 
 }

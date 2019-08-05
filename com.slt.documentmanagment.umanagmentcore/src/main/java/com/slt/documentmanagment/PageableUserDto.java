@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class PageableUserDto {
-    public List<Integer> totalPageSize;
+    public List<Integer> totalPages;
     public List<UserDto> userDtoList;
 }

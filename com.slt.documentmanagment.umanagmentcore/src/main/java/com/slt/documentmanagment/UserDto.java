@@ -20,10 +20,10 @@ public class UserDto implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private boolean enabled;
-    private boolean accountNonExpired;
-    private boolean credentialsNonExpired;
-    private boolean accountNonLocked;
+    private boolean enabled = true;
+    private boolean accountNonExpired = true;
+    private boolean credentialsNonExpired = true;
+    private boolean accountNonLocked = true;
     private String []roles;
 
 
