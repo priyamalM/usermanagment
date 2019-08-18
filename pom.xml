@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<modules>
-		<module>com.slt.documentmanagment.authserver</module>
-		<module>com.slt.documentmanagment.umanagment</module>
-		<module>com.slt.documentmanagment.resourceserver</module>
-        <module>com.slt.documentmanagment.testingsso</module>
-        <module>com.slt.documentmanagment.umanagmentcore</module>
+		<module>com.apps.usermanagment.authserver</module>
+		<module>com.apps.usermanagment.umanagment</module>
+		<module>com.apps.usermanagment.resourceserver</module>
+        <module>com.apps.usermanagment.testingsso</module>
+        <module>com.apps.usermanagment.umanagmentcore</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -15,8 +15,9 @@
 		<version>2.1.6.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.slt.documentmanagment</groupId>
-	<artifactId>dmsmanagment</artifactId>
+
+	<groupId>com.apps.usermanagment</groupId>
+	<artifactId>usermanagment</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>dmsmanagment</name>
 	<description>Demo project for Spring Boot</description>

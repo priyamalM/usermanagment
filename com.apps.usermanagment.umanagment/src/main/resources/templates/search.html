@@ -1,0 +1,131 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/headtag :: headtag"/>
+
+<body>
+<div class="page-wrapper chiller-theme toggled">
+
+    <div th:replace="fragments/sidebarfragment :: sidebar"></div>
+
+    <main class="page-content">
+        <div class="container-fluid">
+            <table id="userlisttable" class="table table-sm table-hover table-striped w-100 compact stripe">
+                <thead>
+                <tr>
+                    <th scope="row" class="border-0 pt-0 pr-0 pl-0 pb-2" colspan="2">
+                        <div class="input-group input-group-sm m-0 p-0">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">view all users</button>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="row" colspan="2" class="border-0 pt-0 pr-0 pl-0 pb-2">
+                        <div class="d-flex flex-row-reverse mp-0">
+                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-user-plus"></i> Add user</button>
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user, iStat : ${paginatedUser}">
+                    <td scope="row">1</td>
+                    <td th:text="${user.userName}" />
+                    <td th:text="${user.email}" />
+                    <td><button type="button" class="btn btn-secondary btn-sm pb-0 pt-0 mt-0 mb-0"><i class="fas fa-eye"></i> view </button>
+                        <button type="button" class="btn btn-secondary btn-sm pb-0 pt-0 mt-0 mb-0"><i class="fas fa-edit"></i> edit </button></td>
+                </tr>
+                </tbody>
+            </table>
+            <div th:if="${pageSize > 0}" class="pagination"
+                 th:each="pageNumber : ${pageNumbers}">
+                <a th:href="@{/search(size=${paginatedUser.size}, page=${pageNumber})}"
+                   th:text=${pageNumber}
+                   th:class="${pageNumber==paginatedUser.number + 1} ? active"></a>
+            </div>
+        </div>
+    </main>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Save New User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="modal-body">
+                        <form method="post" th:action="@{/create/user}" th:object="${userob}">
+                            <div class="input-group input-group-sm mb-3">
+                                    <input th:field="*{userName}" type="text" placeholder="user name" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                            </div>
+                            <div class="input-group-sm mb-3">
+                                <input th:field="*{email}" type="email" class="form-control" placeholder="email address" aria-label="Recipient's email" aria-describedby="basic-addon2">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="input-group input-group-sm mb-3">
+                                        <input th:field="*{firstName}" type="text" placeholder="first name" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group input-group-sm mb-3">
+                                        <input th:field="*{lastName}" type="text" placeholder="last name" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Roles</label>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-check" th:each="role: ${userob.roles}">
+                                                    <input class="form-check-input" type="checkbox" th:field="*{roles}" th:value="${role}">
+                                                    <label class="form-check-label" th:for="${#ids.prev('roles')}" th:text="${role}">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-9"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">generate</span>
+                                </div>
+                                <input th:field="*{password}" type="text" class="form-control" placeholder="password" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- page-wrapper -->
+<div th:replace="fragments/footer :: footer" th:remove="tag"></div>
+<script src="js/sidebar.js"  th:src="@{/js/sidebar.js}"></script>
+</body>
+</html>
